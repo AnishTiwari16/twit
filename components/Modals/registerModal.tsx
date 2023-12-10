@@ -10,7 +10,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import useLoginModal from '@/hooks/useLoginModal';
-import useRegisterModal from '@/hooks/useRegisterModal copy';
+import useRegisterModal from '@/hooks/useRegisterModal';
 import React, { useCallback } from 'react';
 
 export function RegisterModal() {
