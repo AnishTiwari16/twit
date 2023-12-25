@@ -26,9 +26,10 @@ export default function RootLayout({
                     inter.className
                 )}
             >
-                <LoginDialog />
                 <RegisterModal />
                 <Layout>{children}</Layout>
+
+                <LoginDialog />
             </body>
         </html>
     );

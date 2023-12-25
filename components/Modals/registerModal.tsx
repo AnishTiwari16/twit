@@ -11,6 +11,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import useLoginModal from '@/hooks/useLoginModal';
 import useRegisterModal from '@/hooks/useRegisterModal';
+import axios from 'axios';
 import React, { useCallback } from 'react';
 
 export function RegisterModal() {
@@ -18,7 +19,7 @@ export function RegisterModal() {
     const registerModal = useRegisterModal();
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
-    const [userName, setUserName] = React.useState('');
+    const [username, setUsername] = React.useState('');
     const [name, setName] = React.useState('');
     const [isLoading, setIsLoading] = React.useState(false);
     const toggleState = useCallback(() => {
@@ -31,15 +32,22 @@ export function RegisterModal() {
     const onSubmit = useCallback(async () => {
         try {
             setIsLoading(true);
+            await axios.post('/api/register', {
+                email,
+                password,
+                username,
+                name,
+            });
             loginModal.onClose();
         } catch (error) {
             console.log(error);
         } finally {
             setIsLoading(false);
         }
-    }, [loginModal]);
+    }, [registerModal, email, password, username, name]);
+
     return (
-        <Dialog open={registerModal.isOpen}>
+        <Dialog open={true}>
             <DialogContent className="sm:max-w-[425px] bg-black">
                 <DialogHeader>
                     <DialogTitle>Create an account</DialogTitle>
@@ -78,7 +86,7 @@ export function RegisterModal() {
                             id="text"
                             placeholder="john101"
                             className="col-span-3 bg-black"
-                            onChange={(e) => setUserName(e.target.value)}
+                            onChange={(e) => setUsername(e.target.value)}
                         />
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
@@ -98,6 +106,7 @@ export function RegisterModal() {
                     <Button
                         type="submit"
                         className="w-full bg-white text-black hover:bg-white hover:bg-opacity-75 hover:transition"
+                        onClick={onSubmit}
                     >
                         Register
                     </Button>
